@@ -1,10 +1,9 @@
 const container = document.querySelector(".container");
-function grid(){
-    for(let i=0;i<16;i++){
+function grid(size){
+    for(let i=0;i<size;i++){
         let rows=document.createElement("div");
-        for(let j=0;j<16;j++){
+        for(let j=0;j<size;j++){
             let divs=document.createElement("div");
-            divs.textContent='0';
             divs.classList.add('square');
             rows.appendChild(divs);
             
@@ -13,6 +12,34 @@ function grid(){
     }
     
 }
-grid();
-const temp = document.querySelectorAll(".square");
-temp.textContent='9';
+grid(16);
+let temp = document.querySelectorAll('.square');
+
+temp.forEach(square => {
+    square.addEventListener('mouseenter',()=>{
+        square.classList.add('hover');
+    });
+});
+
+temp.forEach(item=>{
+   
+    item.addEventListener('click',()=>{
+        item.classList.remove('hover');
+    });
+});
+
+
+function sizeChange(size){
+    for(let i=0;i<size;i++){
+        let rows=document.createElement("div");
+        for(let j=0;j<size;j++){
+            let divs=document.createElement("div");
+            divs.classList.add('square');
+            rows.appendChild(divs);
+            
+        }
+        container.appendChild(rows);
+    }
+}
+const btn = document.querySelector('.sizebtn');
+btn.addEventListener('click',()=>sizeChange(32));
