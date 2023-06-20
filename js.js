@@ -6,10 +6,13 @@ function grid(size){
             let divs=document.createElement("div");
             divs.classList.add('square');
             divs.addEventListener('mouseenter',()=>{
-                divs.classList.add('hover');
+                //divs.classList.add('hover');
+                if(divs.style.backgroundColor===""){
+                divs.style.backgroundColor=btn_color.value;
+                }
             });
             divs.addEventListener('click',()=>{
-                divs.classList.remove('hover');
+                divs.style.backgroundColor="";
             });
             rows.appendChild(divs);
             
@@ -32,22 +35,49 @@ function grid(size){
 function reset(){
     const temp = document.querySelectorAll('.square');
     temp.forEach(item => {
-        item.classList.remove('hover');
+        item.style.backgroundColor="";
     });
 }
 
 function sizeChange(size){
+    if(size!==null){
     const temp = document.querySelectorAll('.square');
     temp.forEach(item =>{
         item.remove();
     });
   grid(size);
-
-  
+}
+}
+function getSize(){
+    let size = window.prompt("Please enter desired size");
+    if(size>0&&size<=100){
+        return size;
+    }
+    else{
+        return null;
+    }
 }
 const btn = document.querySelector('.sizebtn');
-btn.addEventListener('click',()=>sizeChange(12));
+btn.addEventListener('click',()=>
+    sizeChange(getSize())
+);
 
 const btn_reset = document.querySelector('.resetbtn');
 btn_reset.addEventListener('click',() =>reset());
+
+
+const btn_color = document.querySelector('.colorpicker');
+btn_color.addEventListener('mouseup',()=>
+    function(){
+        const marker = document.querySelector('hover');
+        const temp = "background-color: "+this.value;
+        marker.classList.add(temp);
+    }
+
+);
+
+
+
+
+
 grid(16);
